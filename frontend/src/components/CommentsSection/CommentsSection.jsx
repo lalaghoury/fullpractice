@@ -15,7 +15,9 @@ const CommentsSection = ({ Id, used }) => {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/comments/${Id}`);
+      const response = await axios.get(
+        `https://tense-woolens-bass.cyclic.app/comments/${Id}`
+      );
       setComments(response.data.reverse());
     } catch (error) {
       console.error("Fetching data failed:", error); // Debug: log the error if fetching fails
@@ -41,7 +43,7 @@ const CommentsSection = ({ Id, used }) => {
       model: used,
     };
     axios
-      .post("http://localhost:5000/comments", newComment)
+      .post("https://tense-woolens-bass.cyclic.app/comments", newComment)
       .then((response) => {
         setCommentBody(""); // Clear input after successful addition
         onUpdateComments(); // Fetch data again to update comments

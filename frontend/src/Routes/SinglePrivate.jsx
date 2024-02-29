@@ -11,7 +11,7 @@ async function checkAuthorship(auth, type, id) {
   }
   axios.defaults.headers.common["Authorization"] = `Bearer ${auth.token}`;
   const response = await axios.get(
-    `http://localhost:5000/${type}/${id}/authorship`
+    `https://tense-woolens-bass.cyclic.app/${type}/${id}/authorship`
   );
   return response.data.author;
 }

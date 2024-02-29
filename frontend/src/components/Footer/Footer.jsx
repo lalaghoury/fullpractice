@@ -19,7 +19,7 @@ function Footer() {
   const handleNewsletterAction = async (values) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/newsletter/subscribe",
+        "https://tense-woolens-bass.cyclic.app/newsletter/subscribe",
         { email: values.email, userId: auth.user._id }
       );
       const data = response.data;

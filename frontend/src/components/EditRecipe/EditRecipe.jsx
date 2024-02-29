@@ -41,10 +41,12 @@ function EditRecipe() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      axios.get("http://localhost:5000/category/names").then((response) => {
-        setCategories(response.data);
-        console.log(response.data);
-      });
+      axios
+        .get("https://tense-woolens-bass.cyclic.app/category/names")
+        .then((response) => {
+          setCategories(response.data);
+          console.log(response.data);
+        });
       const recipe = await getSingleRecipe(recipe_id);
       setRecipe(recipe);
       setCategories(categories);
@@ -73,7 +75,7 @@ function EditRecipe() {
         content: "If you proceed, the changes you have made will be saved.",
         onOk: async () => {
           const response = await axios.put(
-            `http://localhost:5000/recipe/${recipe_id}`,
+            `https://tense-woolens-bass.cyclic.app/recipe/${recipe_id}`,
             { ...values, recipe_imageurl: recipe_imageurl }
           );
           if (response.data.success) {

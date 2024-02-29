@@ -51,7 +51,7 @@ export const AddRecipeProvider = ({ children }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/image",
+        "https://tense-woolens-bass.cyclic.app/image",
         formData
       );
       setLoading(false);
@@ -67,16 +67,18 @@ export const AddRecipeProvider = ({ children }) => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/recipe", { ...values, recipe_imageurl });
+        "https://tense-woolens-bass.cyclic.app/recipe",
+        { ...values, recipe_imageurl }
+      );
       console.log("Server response:", response.data);
       if (response.data.success) {
         message.success(response.data.message);
         form.resetFields();
-        setShowImage(false)
-        setRecipe_imageurl('')
+        setShowImage(false);
+        setRecipe_imageurl("");
         setTimeout(() => {
           navigate(`/recipe/${response.data.newRecipe._id}`);
-        }, 1000)
+        }, 1000);
         setIsSubmitting(false);
       }
     } catch (error) {
@@ -102,17 +104,18 @@ export const AddRecipeProvider = ({ children }) => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:5000/blog", { ...values, user: [userId], image: recipe_imageurl }
+        "https://tense-woolens-bass.cyclic.app/blog",
+        { ...values, user: [userId], image: recipe_imageurl }
       );
       console.log("Server response:", response.data);
       if (response.data.success) {
         message.success(response.data.message);
         form.resetFields();
-        setShowImage(false)
-        setRecipe_imageurl('')
+        setShowImage(false);
+        setRecipe_imageurl("");
         setTimeout(() => {
           navigate(`/blog/${response.data.savedPost._id}`);
-        }, 1000)
+        }, 1000);
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -123,8 +126,7 @@ export const AddRecipeProvider = ({ children }) => {
   const handleCancel = () => {
     form.resetFields();
     setShowImage(false);
-  }
-
+  };
 
   const uploadButton = (
     <div style={{ textAlign: "center" }}>
@@ -137,7 +139,22 @@ export const AddRecipeProvider = ({ children }) => {
 
   return (
     <AddRecipeContext.Provider
-      value={{ isSubmitting, setIsSubmitting, uploadButton, onFinishBlog, handleImageChange, beforeUpload, handleUpload, showImage, setRecipe_imageurl, recipe_imageurl, setShowImage, onFinish, form, handleCancel }}
+      value={{
+        isSubmitting,
+        setIsSubmitting,
+        uploadButton,
+        onFinishBlog,
+        handleImageChange,
+        beforeUpload,
+        handleUpload,
+        showImage,
+        setRecipe_imageurl,
+        recipe_imageurl,
+        setShowImage,
+        onFinish,
+        form,
+        handleCancel,
+      }}
     >
       {children}
     </AddRecipeContext.Provider>
@@ -151,4 +168,3 @@ export const useAddRecipe = () => {
   }
   return context;
 };
-

@@ -90,7 +90,7 @@ function UserProfilePage() {
   const handleUnsubscribe = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/newsletter/unsubscribe"
+        "https://tense-woolens-bass.cyclic.app/newsletter/unsubscribe"
       );
       const data = response.data;
       if (data.success) {
@@ -139,7 +139,7 @@ function UserProfilePage() {
   const handleUserCredentialsUpdate = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/user/${user_id}`,
+        `https://tense-woolens-bass.cyclic.app/user/${user_id}`,
         { username, email, bio, fullname }
       );
       if (response.data.success) {
@@ -160,7 +160,7 @@ function UserProfilePage() {
   const handleUserImageChange = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/user/${user_id}`,
+        `https://tense-woolens-bass.cyclic.app/user/${user_id}`,
         { userbigimage: recipe_imageurl, userimage: recipe_imageurl }
       );
       if (response.data.success) {
@@ -192,7 +192,7 @@ function UserProfilePage() {
     const endpoint = action === "follow" ? "follow" : "unfollow";
     try {
       const response = await axios.put(
-        `http://localhost:5000/user/${user_id}/${endpoint}`,
+        `https://tense-woolens-bass.cyclic.app/user/${user_id}/${endpoint}`,
         { Id }
       );
       if (response.data.success) {
