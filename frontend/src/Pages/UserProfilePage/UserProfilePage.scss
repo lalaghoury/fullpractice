@@ -68,7 +68,8 @@
     gap: 20px;
     align-items: center;
     .user-form {
-      .k2 {
+      width: 700px;
+      .user-form-wrap {
         width: 100%;
         display: flex;
         justify-content: space-evenly;
@@ -134,16 +135,6 @@
     }
   }
 
-  @media screen and (max-width: 1440px) {
-    .profile-details .user-plan .user-plan-div,
-    .user-newsletter .user-newsletter-buttons {
-      width: 48%;
-    }
-    .user-newsletter .user-newsletter-buttons {
-      width: 35%;
-    }
-  }
-
   @media screen and (max-width: 1200px) {
     .profile-details .user-plan .user-plan-div,
     .user-newsletter .user-newsletter-buttons {
@@ -153,54 +144,49 @@
       width: 35%;
     }
   }
+}
 
-  @media screen and (max-width: 1000px) {
-    .profile-details .user-plan .user-plan-div,
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
+@media screen and (max-width: 600px) {
+  .user-profile-page {
+    .profile-details {
+      .user-plan {
+        width: 100%;
+        .user-plan-div {
+          width: 100%;
+        }
+      }
+      .user-form {
+        overflow: hidden;
+        width: 100%;
+        .user-form-wrap {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
     }
-    .user-newsletter .user-newsletter-buttons {
+    .profile-head {
       width: 100%;
+      .profile-head-details {
+        width: 100%;
+      }
     }
   }
+}
 
-  @media screen and (max-width: 700px) {
-    .profile-details .user-plan .user-plan-div,
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    .profile-details .user-plan .user-plan-div,
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    .profile-details .user-plan .user-plan-div,
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-  }
-
-  @media screen and (max-width: 400px) {
-    .profile-details .user-plan .user-plan-div,
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
-    }
-    .user-newsletter .user-newsletter-buttons {
-      width: 100%;
+@media screen and (max-width: 700px) {
+  .user-profile-page {
+    .profile-details {
+      .user-form {
+        width: 100%;
+        .user-form-wrap {
+          max-width: 100%;
+          flex-direction: column;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+          align-items: center;
+        }
+      }
     }
   }
 }
