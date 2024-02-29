@@ -90,7 +90,7 @@ function UserProfilePage() {
   const handleUnsubscribe = async () => {
     try {
       const response = await axios.post(
-        "https://tense-woolens-bass.cyclic.app/newsletter/unsubscribe"
+        "http://localhost:5000/newsletter/unsubscribe"
       );
       const data = response.data;
       if (data.success) {
@@ -139,7 +139,7 @@ function UserProfilePage() {
   const handleUserCredentialsUpdate = async () => {
     try {
       const response = await axios.put(
-        `https://tense-woolens-bass.cyclic.app/user/${user_id}`,
+        `http://localhost:5000/user/${user_id}`,
         { username, email, bio, fullname }
       );
       if (response.data.success) {
@@ -160,7 +160,7 @@ function UserProfilePage() {
   const handleUserImageChange = async () => {
     try {
       const response = await axios.put(
-        `https://tense-woolens-bass.cyclic.app/user/${user_id}`,
+        `http://localhost:5000/user/${user_id}`,
         { userbigimage: recipe_imageurl, userimage: recipe_imageurl }
       );
       if (response.data.success) {
@@ -192,7 +192,7 @@ function UserProfilePage() {
     const endpoint = action === "follow" ? "follow" : "unfollow";
     try {
       const response = await axios.put(
-        `https://tense-woolens-bass.cyclic.app/user/${user_id}/${endpoint}`,
+        `http://localhost:5000/user/${user_id}/${endpoint}`,
         { Id }
       );
       if (response.data.success) {
@@ -385,7 +385,6 @@ function UserProfilePage() {
           <div className="profile-details">
             <div className="user-form">
               <Form
-                style={{ width: 700 }}
                 size="small"
                 layout="vertical"
                 initialValues={{
@@ -396,7 +395,7 @@ function UserProfilePage() {
                 }}
                 scrollToFirstError={true}
               >
-                <div className="k2">
+                <div className="user-form-wrap">
                   <Form.Item
                     label="Name"
                     style={{ opacity: 0.7 }}
@@ -430,7 +429,7 @@ function UserProfilePage() {
                   </Form.Item>
                 </div>
 
-                <div className="k2">
+                <div className="user-form-wrap">
                   <Form.Item
                     label="Email"
                     name="email"
@@ -453,49 +452,51 @@ function UserProfilePage() {
                     />
                   </Form.Item>
 
-                  <div>
-                    <Form.Item
-                      label="Password"
-                      style={{ opacity: 0.7 }}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your password",
-                        },
-                      ]}
+                  <Form.Item
+                    label="Password"
+                    style={{ opacity: 0.7 }}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your password",
+                      },
+                    ]}
+                  >
+                    <Button
+                      style={{
+                        marginTop: 5,
+                        padding: 15,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      className="disable-hover text-primary bold"
+                      onClick={() =>
+                        navigate(`/user/${user_id}/change-password`)
+                      }
                     >
-                      <Button
-                        style={{
-                          marginTop: 5,
-                          padding: 15,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                        className="disable-hover text-primary bold"
-                        onClick={() =>
-                          navigate(`/user/${user_id}/change-password`)
-                        }
-                      >
-                        Change Password
-                      </Button>
-                    </Form.Item>
-                  </div>
+                      Change Password
+                    </Button>
+                  </Form.Item>
                 </div>
 
-                <Form.Item
-                  label="User Bio"
-                  name="bio"
-                  style={{ opacity: 0.7 }}
-                  rules={[{ required: true, message: "Please enter your bio" }]}
-                >
-                  <TextArea
-                    onChange={(e) => setBio(e.target.value)}
-                    placeholder="Hello welcome to my page , I hope you enjoy the recipes I created"
-                    style={{ padding: 8 }}
-                    className="antd-form-input"
-                  />
-                </Form.Item>
+                <div className="user-form-wrap">
+                  <Form.Item
+                    label="User Bio"
+                    name="bio"
+                    style={{ opacity: 0.7 }}
+                    rules={[
+                      { required: true, message: "Please enter your bio" },
+                    ]}
+                  >
+                    <TextArea
+                      onChange={(e) => setBio(e.target.value)}
+                      placeholder="Hello welcome to my page , I hope you enjoy the recipes I created"
+                      style={{ padding: 8 }}
+                      // className="antd-form-input"
+                    />
+                  </Form.Item>
+                </div>
               </Form>
               {user &&
                 (username !== user.username ||
