@@ -2,8 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import "./CategoryDetails.scss";
 import { Link, useParams } from "react-router-dom";
 import { useFunctions } from "../../context/FunctionsSupply";
-import { FireOutlined } from "@ant-design/icons";
-import { Breadcrumb, Divider, Rate, Select } from "antd";
+import RecipesCard from "../RecipesCard/RecipesCard";
+import { Breadcrumb, Button, Divider, Empty, Select } from "antd";
 import AppLayout from "../../Layout/Layout";
 
 function CategoryDetails() {
@@ -12,8 +12,6 @@ function CategoryDetails() {
   const [category, setCategory] = useState(null);
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cardRatings, setCardRatings] = useState({});
-  const desc = ["Terrible", "Bad", "Normal", "Good", "Wonderful"];
 
   const fetchCategory = useCallback(async () => {
     try {
@@ -22,29 +20,16 @@ function CategoryDetails() {
       setAllCategories(res);
       const singleCategory = await getSingleCategory(category_id);
       setCategory(singleCategory);
-      const initialRatings = category.recipes.reduce((ratings, recipe) => {
-        ratings[recipe._id] = recipe.recipe_ratings || 0;
-        return ratings;
-      }, {});
-      setCardRatings(initialRatings);
     } catch (error) {
       console.error("Failed to fetch category:", error);
     } finally {
       setLoading(false);
     }
-  }, [category_id, getSingleCategory, getAllCategories, category.recipes]);
+  }, [category_id, getSingleCategory, getAllCategories]);
 
   useEffect(() => {
     fetchCategory();
   }, [fetchCategory]);
-
-  const handleRatingChange = (value, recipe_id) => {
-    if (Number.isInteger(value) && value >= 0 && value <= desc.length) {
-      setCardRatings((prevRatings) => ({ ...prevRatings, [recipe_id]: value }));
-    } else {
-      console.error("Invalid rating value:", value);
-    }
-  };
 
   if (loading) return <h1>Loading...</h1>;
 
@@ -106,54 +91,47 @@ function CategoryDetails() {
         <Divider />
         <div className="category-display">
           <div className="card-wrapper">
-            {category.recipes.map((recipe) => (
-              <div key={recipe._id} className="card">
-                <div className="card-parent">
-                  <div className="card-parent-img">
-                    <img
-                      src={recipe.recipe_imageurl}
-                      alt={recipe.recipe_title}
-                      className="card-image"
-                    />
-                  </div>
-                  <div className="card-rating">
-                    <Rate
-                      style={{ fontSize: 22, color: "#B55D51" }}
-                      tooltips={desc}
-                      onChange={(value) =>
-                        handleRatingChange(value, recipe._id)
-                      }
-                      value={cardRatings[recipe._id]}
-                    />
-                  </div>
-                </div>
-                <h3 className="font-16">
-                  <Link
-                    className="links-fix text-black"
-                    to={`/recipe/${recipe._id}`}
+            {category && category.recipes && category.recipes.length > 0 ? (
+              <RecipesCard data={category.recipes} userShow={true} />
+            ) : (
+              <div
+                className="empty-recipes-container"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  margin: "0 auto",
+                  width: "100%",
+                }}
+              >
+                <Empty description={<span>No recipes to display</span>} />
+                <div
+                  className="empty-recipes-actions"
+                  style={{
+                    marginTop: "20px",
+                    display: "flex",
+                    gap: "10px",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Button className="disable-hover bold text-black">
+                    <Link to="/recipes">Browse recipes</Link>
+                  </Button>
+                  {/* <Button className="disable-hover bold text-black">
+                    <Link to={`/user/${auth.user._id}`}>
+                      Go back to profile
+                    </Link>
+                  </Button> */}
+                  <Button
+                    type="dashed"
+                    className="disable-hover bold text-black"
                   >
-                    {recipe.recipe_title}
-                  </Link>
-                </h3>
-                <div className="card-user">
-                  <span className="card-left">
-                    <img src={recipe.user.userimage} alt="" />
-                    <h4>
-                      <Link
-                        className="links-fix text-black"
-                        to={`/user/${recipe.user._id}`}
-                      >
-                        {recipe.user.username}
-                      </Link>
-                    </h4>
-                  </span>
-                  <span className="card-right">
-                    <FireOutlined style={{ color: "red" }} />
-                    <h4>{recipe.firecount}</h4>
-                  </span>
+                    <Link to={`/add-recipe`}>Add Your Recipe Now!</Link>
+                  </Button>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

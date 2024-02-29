@@ -2,6 +2,17 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 8000;
+const mongoose = require("mongoose");
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
 // Middlewares
 
@@ -76,8 +87,8 @@ app.use("/newsletter", newsletterRouter);
 ///////////////////////////////////////////////////////////////////////////////
 
 // Connect to database and  Listen
+connectDB().then(() => {
   app.listen(PORT, () => {
-    const db = require("./model/db");
-    db();
-    console.log(`Server is running on port ${PORT}`);
+    console.log("listening for requests");
   });
+});
