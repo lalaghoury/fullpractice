@@ -3,7 +3,7 @@ const cors = require("cors");
 const useCors = (app) => {
   app.use(
     cors({
-      origin: "https://perfectfood.vercel.app",
+      origin: "https://perfectrecipe-delta.vercel.app",
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
